@@ -1,5 +1,9 @@
 package com.example.productorderapp;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,27 +53,34 @@ public class CreateMemberTest  {
         assertEquals(member,new CreateMemberFixture("userId","email"),"예상과 결과가 동일한지 확인합니다.");
     }
 
-
+@Entity
 class Member {
-        private final String userId;
-        private final String email;
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private String userId;
+        private String email;
 
 
         public Member(String userId, String email) {
             this.userId = userId;
             this.email = email;
         }
+
+    public Member() {
+
     }
+}
 
     private class CreateMember {
         public Member execute(MemberDTO.request request) {
 
-            final String userId = request.userId();
-            final String email = request.email();
+            final String userId = request.userId;
+            final String email = request.email;
 
-            final Member member = new Member(userId,email);
-            memberRepository.save(member);
+            final Member member = new Member(userId, email);
+            return memberRepository.save(member);
         }
+
     }
 
     private class MemberDTO {
