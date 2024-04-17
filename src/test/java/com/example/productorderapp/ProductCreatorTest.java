@@ -21,6 +21,7 @@ public class ProductCreatorTest {
 
     @BeforeEach
     void setUp() {
+        // setup
         productJpaRepository = mock(ProductJpaRepository.class);
         productRepository = new ProductCoreRepository(productJpaRepository);
         productCreator = new ProductCreator(productRepository);
