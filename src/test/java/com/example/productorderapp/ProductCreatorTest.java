@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
@@ -54,6 +55,15 @@ public class ProductCreatorTest {
         Product capturedProduct = productCaptor.getValue();
         assertEquals(request.getName(), capturedProduct.getName());
         assertEquals(request.getPrice(), capturedProduct.getPrice());
+    }
+
+    @Test
+    void create_product_failure() {
+        final AddProductRequest request = getAddProductRequestFixture();
+        Mockito.doThrow(new RuntimeException("Database error")).when(productJpaRepository).addProduct(any(Product.class));
+
+        assertThrows(RuntimeException.class, () -> productCreator.addProduct(request),
+                "Expected addProduct to throw, but it did not");
     }
 
 
