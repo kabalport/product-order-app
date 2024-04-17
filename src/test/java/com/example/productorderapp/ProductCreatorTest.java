@@ -7,6 +7,8 @@ import org.mockito.Mockito;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class ProductCreatorTest {
@@ -19,10 +21,11 @@ public class ProductCreatorTest {
 
     @BeforeEach
     void setUp() {
-        productJpaRepository = new ProductJpaRepository();
+        productJpaRepository = mock(ProductJpaRepository.class);
         productRepository = new ProductCoreRepository(productJpaRepository);
         productCreator = new ProductCreator(productRepository);
     }
+
 
 
     private AddProductRequest getAddProductRequestFixture() {
@@ -42,6 +45,7 @@ public class ProductCreatorTest {
 
         // then
 
+        verify(productJpaRepository).addProduct(any(Product.class));
 
     }
 
