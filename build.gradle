@@ -29,7 +29,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'com.google.guava:guava:31.1-jre'
 
-
+    //rest-doc
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     //swagger
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
     //test
@@ -49,5 +50,15 @@ dependencies {
 }
 
 tasks.named('test') {
+    // Define snippetsDir as a directory within the build directory
+    def snippetsDir = file("$buildDir/generated-snippets")
+
+    outputs.dir snippetsDir
     useJUnitPlatform()
+
+    doFirst {
+        // Ensure the directory exists before the tests run
+        snippetsDir.mkdirs()
+    }
 }
+
