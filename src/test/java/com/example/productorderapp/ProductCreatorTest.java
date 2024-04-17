@@ -2,11 +2,14 @@ package com.example.productorderapp;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -40,14 +43,17 @@ public class ProductCreatorTest {
     @Test
     void create_product_success() {
         final AddProductRequest request = getAddProductRequestFixture();
+        ArgumentCaptor<Product> productCaptor = ArgumentCaptor.forClass(Product.class);
 
         // when
         productCreator.addProduct(request);
 
         // then
 
-        verify(productJpaRepository).addProduct(any(Product.class));
-
+        verify(productJpaRepository).addProduct(productCaptor.capture());  // 캡처와 검증을 동시에 수행
+        Product capturedProduct = productCaptor.getValue();
+        assertEquals(request.getName(), capturedProduct.getName());
+        assertEquals(request.getPrice(), capturedProduct.getPrice());
     }
 
 
@@ -56,6 +62,15 @@ public class ProductCreatorTest {
         private final String name;
         private final int price;
         private final DiscountPolicy policy;
+
+        public String getName() {
+            return name;
+        }
+
+        public int getPrice() {
+            return price;
+        }
+
 
         public AddProductRequest(String name, int price, DiscountPolicy policy) {
 
@@ -100,6 +115,14 @@ public class ProductCreatorTest {
             return id;
         }
 
+        public String getName() {
+            return name;
+        }
+
+        public int getPrice() {
+            return price;
+        }
+
         public Product(String name, int price, DiscountPolicy policy) {
             this.name = name;
             this.price = price;
@@ -110,6 +133,8 @@ public class ProductCreatorTest {
         public void assignId(Long id) {
             this.id = id;
         }
+
+
     }
 
     private interface ProductRepository {
