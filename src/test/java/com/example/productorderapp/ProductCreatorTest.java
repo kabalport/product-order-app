@@ -56,6 +56,7 @@ public class ProductCreatorTest {
         assertEquals(request.getName(), capturedProduct.getName());
         assertEquals(request.getPrice(), capturedProduct.getPrice());
     }
+    //step1,2
 
     @Test
     void create_product_failure() {
