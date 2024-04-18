@@ -50,6 +50,7 @@ public class ProductCreatorTest {
         productCreator.addProduct(request);
 
         // then
+        //test
 
         verify(productJpaRepository).addProduct(productCaptor.capture());  // 캡처와 검증을 동시에 수행
         Product capturedProduct = productCaptor.getValue();
