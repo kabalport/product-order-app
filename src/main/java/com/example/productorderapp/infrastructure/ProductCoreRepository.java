@@ -10,8 +10,6 @@ public class ProductCoreRepository implements ProductRepository {
         this.productJpaRepository = productJpaRepository;
     }
 
-
-
     @Override
     public Product addProduct(Product product) {
         productJpaRepository.addProduct(product);
