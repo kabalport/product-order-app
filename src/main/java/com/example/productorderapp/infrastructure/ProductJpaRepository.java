@@ -14,4 +14,8 @@ public class ProductJpaRepository {
         product.assignId(++sequence);
         persistence.put(product.getId(), product);
     }
+
+    public Product getProduct(long productId) {
+        return null;
+    }
 }

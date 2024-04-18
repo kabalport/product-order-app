@@ -17,4 +17,10 @@ public class ProductCoreRepository implements ProductRepository {
         productJpaRepository.addProduct(product);
         return product;
     }
+
+    @Override
+    public Product getProduct(long productId) {
+        Product result = productJpaRepository.getProduct(productId);
+        return result;
+    }
 }
