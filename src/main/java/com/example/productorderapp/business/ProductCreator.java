@@ -11,7 +11,7 @@ public class ProductCreator {
     }
 
     public void addProduct(AddProductRequest request) {
-        final Product product = new Product(request.getName(), request.getPrice(), request.getPolicy());
+        final Product product = new Product(request.getName(), request.getPrice());
         productRepository.addProduct(product);
     }
 }

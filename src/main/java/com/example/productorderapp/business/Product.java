@@ -5,7 +5,6 @@ public class Product {
     private Long id;
     private final String name;
     private final int price;
-    private final DiscountPolicy policy;
 
     public Long getId() {
         return id;
@@ -19,14 +18,11 @@ public class Product {
         return price;
     }
 
-    public DiscountPolicy getPolicy() {
-        return policy;
-    }
 
-    public Product(String name, int price, DiscountPolicy policy) {
+
+    public Product(String name, int price) {
         this.name = name;
         this.price = price;
-        this.policy = policy;
     }
 
     public void assignId(Long id) {
