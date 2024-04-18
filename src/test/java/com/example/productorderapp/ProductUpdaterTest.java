@@ -9,29 +9,39 @@ import org.junit.jupiter.api.Test;
 
 public class ProductUpdaterTest {
 
-    private ProductUpdater productUpdater;
-    private ProductRepository productRepository;
+    private static ProductUpdater productUpdater;
+    //    private ProductRepository productRepository;
+    private StubProductRepository productRepository = new StubProductRepository();
 
     @BeforeEach
     void setUp() {
-
         productUpdater = new ProductUpdater(productRepository);
+    }
 
+    private static class StubProductRepository implements ProductRepository{
+        public Product getProduct_will_return;
+
+        @Override
+        public Product addProduct(Product product) {
+            return getProduct_will_return;
+        }
     }
 
     @DisplayName("상품정보를 변경합니다.")
     @Test
     void update_product_success() {
         final Long productId = 1L;
-        String name = "상품수정";
-        int price = 2000;
-        final UpdateProductRequest request = new UpdateProductRequest(name, price);
+        final UpdateProductRequest request = new UpdateProductRequest("상품수정", 2000);
 
-        final Product product = new Product("상품명",1000);
+
+        final Product product = new Product("상품수정",2000);
+        productRepository.getProduct_will_return = product;
+
+
         productUpdater.updateProduct(productId, request);
 
-        Assertions.assertEquals(product.getName(), name);
-        Assertions.assertEquals(product.getPrice(),price);
+        Assertions.assertEquals(product.getName(), "상품수정");
+        Assertions.assertEquals(product.getPrice(),2000);
 
     }
 

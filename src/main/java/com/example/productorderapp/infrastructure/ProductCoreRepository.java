@@ -13,7 +13,8 @@ public class ProductCoreRepository implements ProductRepository {
 
 
     @Override
-    public void addProduct(Product product) {
+    public Product addProduct(Product product) {
         productJpaRepository.addProduct(product);
+        return product;
     }
 }
